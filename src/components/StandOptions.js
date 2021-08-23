@@ -83,7 +83,7 @@ function StandOptions({ state, clase, id }) {
 			/>
 			<button className="btn-option" onClick={park}>Park</button>
 			<button className="btn-option" onClick={() => ShowModal(modalRentRef)}>Rent</button>
-			<Close onClick={deleteStand}>X</Close>
+			<Close onClick={deleteStand}>delete</Close>
 		</StandOptionsStyled>
 	)
 	};
@@ -95,7 +95,6 @@ function StandOptions({ state, clase, id }) {
 			<button className="btn-option" onClick={reservedParking} ref={rpRef}>Park</button>
 			<button className="btn-option" onClick={cancelReservation}>Cancel Reservation</button>
 			<CancelReserve reference={cancelReserveRef}/>
-			<Close onClick={deleteStand}>X</Close>
 		</StandOptionsStyled>
 	)
 	};
@@ -104,7 +103,6 @@ function StandOptions({ state, clase, id }) {
 	return (
 		<StandOptionsStyled className={clase}>
 			<button className="btn-option" onClick={retract}>Retract</button>
-			<Close onClick={deleteStand}>X</Close>
 			<Voucher
 			reference={modalVoucherRef}
 			amount={dataVoucher.amount}
@@ -160,7 +158,7 @@ const Close = styled.strong`
 	position: absolute;
 	z-index: 30;
 	top: .6em;
-	right: 1em;
+	left: 1em;
 	cursor: pointer;
 	font-size: 21px;
 	color: white;

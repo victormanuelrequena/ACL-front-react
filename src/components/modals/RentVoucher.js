@@ -33,7 +33,7 @@ const RentVoucherStyled = styled.div`
 	align-items: center;
 	row-gap: 1em;
 	display: none;
-	z-index: 1;
+	z-index: 5;
 	background: white;
 	.camp {
 		width: 80%;
@@ -51,7 +51,7 @@ const RentVoucherStyled = styled.div`
 	}
 	strong {
 		position: absolute;
-		z-index: 3;
+		z-index: 100;
 		top: 1em;
 		right: 1em;
 		cursor: pointer;
