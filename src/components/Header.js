@@ -10,6 +10,9 @@ function Header() {
 	const modalCreateRef = useRef();
 
 	function createStand() {
+
+		if(lugar.lugar < 1) return
+
 		window.fetch(`${API}crear`, {
 			method: 'POST',
 			headers: {
@@ -19,16 +22,9 @@ function Header() {
 		})
 		.then(res => res.json())
 		.then(data => console.log(data))
-		ShowModal(modalCreateRef)
+		ShowModal(modalCreateRef);
+		window.location.reload();
 	};
-
-	function showCreateModal() {
-		if(modalCreateRef.current.style.display === 'none') {
-			modalCreateRef.current.style.display="flex";
-		}else {
-			modalCreateRef.current.style.display="none";
-		}
-	}
 
 	function handleChange(e) {
 		setLugar({
@@ -42,7 +38,7 @@ function Header() {
 			<div>
 			<Button onClick={() => ShowModal(modalCreateRef)}>Create Stand</Button>
 			</div>
-			<BoxModalCreate ref={modalCreateRef}>
+			<BoxModalCreate ref={modalCreateRef} style={{display: 'none'}}>
 				<ModalCreate>
 					<TextModal>Ingresa el numero de estacionamiento con el que deseas crear el puesto</TextModal>
 					<SetLugar type="number" onChange={handleChange} />
@@ -105,7 +101,7 @@ const BoxModalCreate = styled.div`
 const ModalCreate = styled.div`
 	width: 480px;
 	height: 380px;
-	background: rgba(240,240,240, .8);
+	background: rgba(220,220,220);
 	border-radius: 10px;
 	display: flex;
 	justify-content: center;

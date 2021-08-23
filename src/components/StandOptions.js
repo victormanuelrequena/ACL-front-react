@@ -2,18 +2,17 @@ import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import Voucher from './modals/Voucher';
 import RentVoucher from './modals/RentVoucher';
-import CancelReserve from './modals/CancelReserve';
 import SetDaysModal from './modals/SetDaysModal';
 import { API } from '../config.js';
 import * as ClientHttp from './utils/ClientHttp';
 import ShowModal from './utils/ShowModals';
 
 function StandOptions({ state, clase, id }) {
-	const modalRentRef = useRef();
-	const modalVoucherRef = useRef();
-	const cancelReserveRef = useRef();
-	const rentVoucherRef = useRef();
-	const rpRef = useRef();
+	const modalRentRef = useRef(),
+	modalVoucherRef = useRef(),
+	rentVoucherRef = useRef(),
+	rpRef = useRef(),
+	setKeyRef = useRef();
 
 	const [rentDays, setRentDays] = useState({
 		idBody: id,
@@ -23,41 +22,55 @@ function StandOptions({ state, clase, id }) {
 	const [dataVoucher, setDataVoucher]= useState({});
 	const [dataRentVoucher, setDataRentVoucher] = useState({});
 
-	function park() {
-	ClientHttp.PUT(`${API}estacionar`, {idBody: id});
+	async function park() {
+	await ClientHttp.PUT(`${API}estacionar`, {idBody: id});
+	window.location.reload();
 	};
 
 	async function rent() {
 	const data = await ClientHttp.PUT(`${API}reservar`, rentDays)
-	setDataRentVoucher(data)
-	ShowModal(modalRentRef)
+	setDataRentVoucher(data);
 	ShowModal(rentVoucherRef);
 	};
 
 	async function reservedParking(e) {
+	if(Key.length < 6) {
+		setKeyRef.current.style.border="2px solid red";
+		return;
+	};
+
 	const data = await ClientHttp.PUT(`${API}reservado/estacionar`, { idBody: id, key: Key });
-	console.log(data);
+
 	if(data.intento === 3) {
 		rpRef.current.style.display="none";
 		setTimeout(() => {
 			rpRef.current.style.display="flex";
 		}, 300000);
+	}else {
+		window.location.reload();
+		setKeyRef.current.style.border="none"
 	}
 	};
 
-	function cancelReservation() {
-	ClientHttp.PUT(`${API}reservado/cancelar`, {idBody: id});
-	ShowModal(cancelReserveRef, 'limit')
+	async function cancelReservation() {
+	await ClientHttp.PUT(`${API}reservado/cancelar`, {idBody: id});
+	window.location.reload();
 	};
 
 	async function retract() {
 	const data = await ClientHttp.PUT(`${API}retirar`, {idBody: id});
 	setDataVoucher(data);
-	ShowModal(modalVoucherRef, 'limit');
+	if(!data.fixed) {
+		ShowModal(modalVoucherRef, 'limit');
+		return;
+	}
+	window.location.reload();
+
 	}
 
 	async function deleteStand() {
-		const data = await ClientHttp.DELETE(`${API}eliminar`, {idBody: id});
+		await ClientHttp.DELETE(`${API}eliminar`, {idBody: id});
+		window.location.reload();
 	};
 
 	function handleChange(e) {
@@ -65,6 +78,10 @@ function StandOptions({ state, clase, id }) {
 			...rentDays,
 			diasDeApartado: e.target.value
 		})
+	};
+
+	const showModalRent = () => {
+		ShowModal(modalRentRef)
 	};
 
 	if(state === 'disponible') {
@@ -82,7 +99,7 @@ function StandOptions({ state, clase, id }) {
 			mount={dataRentVoucher.monto}
 			/>
 			<button className="btn-option" onClick={park}>Park</button>
-			<button className="btn-option" onClick={() => ShowModal(modalRentRef)}>Rent</button>
+			<button className="btn-option" onClick={showModalRent}>Rent</button>
 			<Close onClick={deleteStand}>delete</Close>
 		</StandOptionsStyled>
 	)
@@ -91,10 +108,9 @@ function StandOptions({ state, clase, id }) {
 	if(state === 'reservado') {
 	return (
 		<StandOptionsStyled className={clase}>
-			<SetKey type="password" onChange={(e) => setKey(e.target.value)} />
+			<SetKey ref={setKeyRef} type="password" onChange={(e) => setKey(e.target.value)} />
 			<button className="btn-option" onClick={reservedParking} ref={rpRef}>Park</button>
 			<button className="btn-option" onClick={cancelReservation}>Cancel Reservation</button>
-			<CancelReserve reference={cancelReserveRef}/>
 		</StandOptionsStyled>
 	)
 	};
@@ -102,13 +118,13 @@ function StandOptions({ state, clase, id }) {
 	if(state === 'ocupado') {
 	return (
 		<StandOptionsStyled className={clase}>
-			<button className="btn-option" onClick={retract}>Retract</button>
 			<Voucher
 			reference={modalVoucherRef}
 			amount={dataVoucher.amount}
 			entry={dataVoucher.In}
 			out={dataVoucher.out}
 			/>
+			<button className="btn-option" onClick={retract}>Retract</button>
 		</StandOptionsStyled>
 	)
 	};

@@ -3,8 +3,12 @@ import styled from 'styled-components';
 import ShowModal from '../utils/ShowModals';
 
 function RentVoucher({reference, days, keyRent, mount}) {
+	const rentVoucherHidden = () => {
+		ShowModal(reference)
+		window.location.reload();
+	};
 	return (
-		<RentVoucherStyled ref={reference}>
+		<RentVoucherStyled ref={reference} style={{display: 'none'}}>
 			<h4>Voucher</h4>
 			<div className="camp">
 			<p>Days: </p>
@@ -18,7 +22,7 @@ function RentVoucher({reference, days, keyRent, mount}) {
 			<p>Mount: </p>
 			<p>{mount}</p>
 			</div>
-			<strong onClick={() => ShowModal(reference)}>X</strong>
+			<strong onClick={rentVoucherHidden}>X</strong>
 		</RentVoucherStyled>
 	)
 };

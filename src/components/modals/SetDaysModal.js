@@ -4,10 +4,10 @@ import ShowModal from '../utils/ShowModals';
 
 function SetDaysModal({ modalRentRef, handleChange, rent}) {
 	return (
-		<SetDaysModalStyled ref={modalRentRef}>
+		<SetDaysModalStyled ref={modalRentRef} style={{display: 'none'}}>
 			<ModalCreate>
 					<TextModal>Ingrese la cantidad de dias que desea reservar.</TextModal>
-					<SetDays type="number" onChange={handleChange} />
+					<SetDays type="number" onChange={handleChange}/>
 					<ButtonModal onClick={rent}>Rent</ButtonModal>
 					<ButtonModal onClick={() => ShowModal(modalRentRef)}>Cancel</ButtonModal>
 			</ModalCreate>
@@ -24,7 +24,7 @@ const SetDaysModalStyled = styled.div`
 	justify-content: center;
 	align-items: center;
 	display: none;
-	z-index: 1;
+	z-index: 50;
 `;
 
 const ModalCreate = styled.div`

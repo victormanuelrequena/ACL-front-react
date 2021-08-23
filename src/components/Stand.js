@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import StandOptions from './StandOptions';
 
 function Stand({state, place, fixed, id}) {
-	// console.log(place)
-	// console.log(id)
 	return (
 		<StandStyled className={state} state={state}>
 			<Place>{place}</Place>
