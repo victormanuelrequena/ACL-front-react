@@ -15,7 +15,7 @@ function Voucher({ reference, amount, entry, out }) {
 
 			<div className="td">
 			<p>Mount: </p>
-			<p>{amount}</p>
+			<p>{`${amount}$`}</p>
 			</div>
 
 			<div className="td">

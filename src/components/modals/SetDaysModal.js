@@ -1,15 +1,31 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import ShowModal from '../utils/ShowModals';
 
 function SetDaysModal({ modalRentRef, handleChange, rent}) {
+
+	const setDaysReserveRef = useRef();
+
+	const rentStand = () => {
+		if(setDaysReserveRef.current.value < 12 || setDaysReserveRef.current.value > 79) {
+			setDaysReserveRef.current.style.border="3px solid red";
+			return;
+		};
+		rent(setDaysReserveRef.current.value);
+	};
+
+	const cancelRent = () => {
+		ShowModal(modalRentRef)
+		setDaysReserveRef.current.style.border="none";
+	};
+
 	return (
 		<SetDaysModalStyled ref={modalRentRef} style={{display: 'none'}}>
 			<ModalCreate>
 					<TextModal>Ingrese la cantidad de dias que desea reservar.</TextModal>
-					<SetDays type="number" onChange={handleChange}/>
-					<ButtonModal onClick={rent}>Rent</ButtonModal>
-					<ButtonModal onClick={() => ShowModal(modalRentRef)}>Cancel</ButtonModal>
+					<SetDays type="number" onChange={handleChange} ref={setDaysReserveRef}/>
+					<ButtonModal onClick={rentStand}>Rent</ButtonModal>
+					<ButtonModal onClick={cancelRent}>Cancel</ButtonModal>
 			</ModalCreate>
 		</SetDaysModalStyled>
 	)

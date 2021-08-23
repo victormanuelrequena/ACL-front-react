@@ -20,7 +20,7 @@ function RentVoucher({reference, days, keyRent, mount}) {
 			</div>
 			<div className="camp">
 			<p>Mount: </p>
-			<p>{mount}</p>
+			<p>{`${mount}$`}</p>
 			</div>
 			<strong onClick={rentVoucherHidden}>X</strong>
 		</RentVoucherStyled>

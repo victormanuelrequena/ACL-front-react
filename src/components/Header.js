@@ -32,6 +32,9 @@ function Header() {
 		})
 	};
 
+	const mcHidden = () => {
+		ShowModal(modalCreateRef)
+	};
 	return (
 		<HeaderStyled>
 			<Title><i>Estacion Amé</i></Title>
@@ -43,6 +46,7 @@ function Header() {
 					<TextModal>Ingresa el numero de estacionamiento con el que deseas crear el puesto</TextModal>
 					<SetLugar type="number" onChange={handleChange} />
 					<ButtonModal onClick={createStand}>Crear</ButtonModal>
+					<strong onClick={mcHidden}>X</strong>
 				</ModalCreate>
 			</BoxModalCreate>
 		</HeaderStyled>
@@ -110,6 +114,15 @@ const ModalCreate = styled.div`
 	margin-top: 8em;
 	z-index: 2;
 	row-gap: 1.4em;
+	position: relative;
+		strong {
+		position: absolute;
+		z-index: 100;
+		top: 1em;
+		right: 1em;
+		cursor: pointer;
+		font-size: 18px;
+	}
 `;
 
 const TextModal = styled.h5`

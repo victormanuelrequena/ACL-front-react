@@ -27,7 +27,12 @@ function StandOptions({ state, clase, id }) {
 	window.location.reload();
 	};
 
-	async function rent() {
+	async function rent(days) {
+
+	if(days < 12 || days > 78) {
+		return;
+	};
+
 	const data = await ClientHttp.PUT(`${API}reservar`, rentDays)
 	setDataRentVoucher(data);
 	ShowModal(rentVoucherRef);
