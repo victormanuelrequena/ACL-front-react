@@ -39,12 +39,12 @@ function Header() {
 		<HeaderStyled>
 			<Title><i>Estacion Amé</i></Title>
 			<div>
-			<Button onClick={() => ShowModal(modalCreateRef)}>Create Stand</Button>
+			<Button onClick={() => ShowModal(modalCreateRef)}>Create Stands</Button>
 			</div>
 			<BoxModalCreate ref={modalCreateRef} style={{display: 'none'}}>
 				<ModalCreate>
 					<TextModal>Ingresa el numero de estacionamiento con el que deseas crear el puesto</TextModal>
-					<SetLugar type="number" onChange={handleChange} />
+					<SetLugar type="number" min="1" onChange={handleChange} />
 					<ButtonModal onClick={createStand}>Crear</ButtonModal>
 					<strong onClick={mcHidden}>X</strong>
 				</ModalCreate>
