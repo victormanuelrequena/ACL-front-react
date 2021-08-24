@@ -43,7 +43,7 @@ function Header() {
 			</div>
 			<BoxModalCreate ref={modalCreateRef} style={{display: 'none'}}>
 				<ModalCreate>
-					<TextModal>Ingresa el numero de estacionamiento con el que deseas crear el puesto</TextModal>
+					<TextModal>Ingresa la cantidad de puestos que desea crear.</TextModal>
 					<SetLugar type="number" min="1" onChange={handleChange} />
 					<ButtonModal onClick={createStand}>Crear</ButtonModal>
 					<strong onClick={mcHidden}>X</strong>

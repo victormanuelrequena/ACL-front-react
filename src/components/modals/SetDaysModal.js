@@ -23,7 +23,7 @@ function SetDaysModal({ modalRentRef, handleChange, rent}) {
 		<SetDaysModalStyled ref={modalRentRef} style={{display: 'none'}}>
 			<ModalCreate>
 					<TextModal>Ingrese la cantidad de dias que desea reservar.</TextModal>
-					<SetDays type="number" onChange={handleChange} ref={setDaysReserveRef}/>
+					<SetDays type="number" min="12" max="79" onChange={handleChange} ref={setDaysReserveRef}/>
 					<ButtonModal onClick={rentStand}>Rent</ButtonModal>
 					<ButtonModal onClick={cancelRent}>Cancel</ButtonModal>
 			</ModalCreate>
